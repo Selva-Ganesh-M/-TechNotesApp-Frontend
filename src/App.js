@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route } from "react-router-dom";
+import Layout from "./components/base-route/Layout";
+import Login from "./components/base-route/switchable/Login";
+import Public from "./components/base-route/switchable/Public";
+import DashLayout from "./components/dash-route/DashLayout";
+import NotesList from "./components/dash-route/switchable/NotesList";
+import UsersList from "./components/dash-route/switchable/UsersList";
+import Welcome from "./components/dash-route/switchable/Welcome";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+const App = () => {
+  const content = (
+    <Routes>
+      {/* Base Nested Routes starts */}
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Public />} />
+        <Route path="login" element={<Login />} />
+        {/* Dash Nested Routes - START */}
+        <Route path="dash" element={<DashLayout />}>
+          <Route index element={<Welcome />} />
+          <Route path="notes" elements={<NotesList />} />
+          <Route path="users" elements={<UsersList />} />
+        </Route>
+        {/* Dash Nested Routes - END */}
+      </Route>
+      {/* Base route ends. */}
+    </Routes>
   );
-}
+  return content;
+};
 
 export default App;
